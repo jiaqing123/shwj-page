@@ -48,9 +48,7 @@ jobs:
         run: rm -rf backup/ docs/ post.html postjson/
 
       - name: Build Gmeek
-        run: python Gmeek.py
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python Gmeek.py ${{ secrets.GITHUB_TOKEN }} ${{ github.repository }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
