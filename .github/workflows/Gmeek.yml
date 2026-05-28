@@ -48,6 +48,9 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - name: Remove old static pages
+        run: rm -f index.html post.html
+
       - name: Clean cache (if requested)
         if: ${{ inputs.clean_cache }}
         run: rm -rf backup/ docs/ post.html postjson/
