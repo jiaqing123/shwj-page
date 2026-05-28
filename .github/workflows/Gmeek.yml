@@ -39,7 +39,7 @@ jobs:
         run: |
           git clone --depth 1 --filter=blob:none --sparse https://github.com/Meekdai/Gmeek.git /tmp/Gmeek
           cd /tmp/Gmeek
-          git sparse-checkout set Gmeek.py requirements.txt templates plugins img
+          git sparse-checkout set --no-cone Gmeek.py requirements.txt templates plugins img
           cp Gmeek.py requirements.txt "$GITHUB_WORKSPACE/"
           cp -r templates "$GITHUB_WORKSPACE/" 2>/dev/null || true
           cp -r plugins "$GITHUB_WORKSPACE/" 2>/dev/null || true
