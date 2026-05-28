@@ -35,10 +35,15 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Download Gmeek.py
+      - name: Download Gmeek source
         run: |
-          curl -fsSL https://raw.githubusercontent.com/Meekdai/Gmeek/main/Gmeek.py -o Gmeek.py
-          curl -fsSL https://raw.githubusercontent.com/Meekdai/Gmeek/main/requirements.txt -o requirements.txt
+          git clone --depth 1 --filter=blob:none --sparse https://github.com/Meekdai/Gmeek.git /tmp/Gmeek
+          cd /tmp/Gmeek
+          git sparse-checkout set Gmeek.py requirements.txt templates plugins img
+          cp Gmeek.py requirements.txt "$GITHUB_WORKSPACE/"
+          cp -r templates "$GITHUB_WORKSPACE/" 2>/dev/null || true
+          cp -r plugins "$GITHUB_WORKSPACE/" 2>/dev/null || true
+          cp -r img "$GITHUB_WORKSPACE/" 2>/dev/null || true
 
       - name: Install dependencies
         run: pip install -r requirements.txt
