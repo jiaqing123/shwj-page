@@ -1,0 +1,62 @@
+name: Gmeek
+
+on:
+  issues:
+    types: [opened, edited, labeled, unlabeled, deleted, milestoned, demilestoned, pinned, unpinned, reopened]
+  workflow_dispatch:
+    inputs:
+      clean_cache:
+        description: "清除缓存并强制全量重新生成"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Download Gmeek.py
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/Meekdai/Gmeek/main/Gmeek.py -o Gmeek.py
+          curl -fsSL https://raw.githubusercontent.com/Meekdai/Gmeek/main/requirements.txt -o requirements.txt
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Clean cache (if requested)
+        if: ${{ inputs.clean_cache }}
+        run: rm -rf backup/ docs/ post.html postjson/
+
+      - name: Build Gmeek
+        run: python Gmeek.py
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
