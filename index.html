@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生化危机9：安魂曲 — 官方资料站</title>
+    <style>
+        /* === Reset & Base === */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: "Microsoft YaHei", "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+            background: #0a0a0a;
+            color: #d0d0d0;
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-thumb { background: #8b0000; border-radius: 3px; }
+
+        /* === Typography === */
+        h1, h2, h3 { font-weight: 700; color: #e8e8e8; }
+        a { color: #c0392b; text-decoration: none; transition: color .2s; }
+        a:hover { color: #e74c3c; }
+
+        /* === Hero Section === */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex; align-items: center; justify-content: center;
+            text-align: center;
+            background:
+                radial-gradient(ellipse at center, rgba(139,0,0,.15) 0%, transparent 70%),
+                radial-gradient(ellipse at 30% 50%, rgba(20,20,20,1) 0%, #0a0a0a 100%);
+            overflow: hidden;
+        }
+        .hero::before {
+            content: "";
+            position: absolute; inset: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency=".65" numOctaves="4" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23n)" opacity=".04"/></svg>');
+            pointer-events: none;
+        }
+        .hero .fog {
+            position: absolute; inset: 0;
+            background: radial-gradient(ellipse at 20% 80%, rgba(80,0,0,.3) 0%, transparent 60%),
+                        radial-gradient(ellipse at 80% 20%, rgba(30,0,0,.2) 0%, transparent 50%);
+        }
+        .hero-content { position: relative; z-index: 2; padding: 2rem; }
+        .hero-badge {
+            display: inline-block; padding: .4rem 1.5rem;
+            border: 1px solid #8b0000; border-radius: 2px;
+            font-size: .85rem; letter-spacing: 3px; color: #8b0000;
+            text-transform: uppercase; margin-bottom: 1.5rem;
+        }
+        .hero h1 {
+            font-size: clamp(2.5rem, 7vw, 5.5rem);
+            letter-spacing: 4px; line-height: 1.15;
+            text-shadow: 0 0 60px rgba(139,0,0,.5), 0 2px 4px rgba(0,0,0,.8);
+        }
+        .hero .subtitle {
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
+            color: #999; margin-top: .5rem; letter-spacing: 6px;
+        }
+        .hero .tagline {
+            font-size: 1.1rem; color: #8b0000; margin-top: 1.5rem;
+            font-style: italic; letter-spacing: 2px;
+        }
+        .hero .meta {
+            display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: center;
+            margin-top: 2.5rem; font-size: .9rem; color: #777;
+        }
+        .hero .meta span { display: flex; align-items: center; gap: .4rem; }
+        .hero .meta .sep { width: 1px; height: 16px; background: #333; }
+
+        /* === Navigation === */
+        .nav-bar {
+            position: sticky; top: 0; z-index: 100;
+            background: rgba(10,10,10,.92); backdrop-filter: blur(12px);
+            border-bottom: 1px solid #1a1a1a;
+        }
+        .nav-inner {
+            max-width: 1100px; margin: 0 auto;
+            display: flex; align-items: center; justify-content: center;
+            gap: 2.5rem; padding: 1rem 2rem;
+        }
+        .nav-inner a {
+            font-size: .9rem; letter-spacing: 2px; color: #aaa;
+            text-transform: uppercase; transition: color .2s;
+        }
+        .nav-inner a:hover { color: #e74c3c; }
+
+        /* === Sections === */
+        .section {
+            max-width: 1000px; margin: 0 auto; padding: 5rem 2rem;
+        }
+        .section-header {
+            text-align: center; margin-bottom: 3.5rem;
+        }
+        .section-header h2 {
+            font-size: 2rem; letter-spacing: 3px; margin-bottom: .5rem;
+            position: relative; display: inline-block;
+        }
+        .section-header h2::after {
+            content: "";
+            display: block; width: 50px; height: 2px; background: #8b0000;
+            margin: .6rem auto 0;
+        }
+        .section-header p { color: #777; font-size: .95rem; margin-top: .5rem; }
+
+        /* === Divider === */
+        .divider {
+            width: 100%; height: 1px;
+            background: linear-gradient(90deg, transparent, #1a1a1a, #8b0000, #1a1a1a, transparent);
+            border: none;
+        }
+
+        /* === Story Cards === */
+        .story-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        .story-card {
+            background: #0f0f0f; border: 1px solid #1a1a1a; border-radius: 4px;
+            padding: 2rem 1.5rem; transition: border-color .3s, transform .3s;
+        }
+        .story-card:hover { border-color: #8b0000; transform: translateY(-2px); }
+        .story-card .icon {
+            font-size: 2rem; margin-bottom: 1rem;
+        }
+        .story-card h3 {
+            font-size: 1.15rem; margin-bottom: .7rem; color: #c0392b;
+            letter-spacing: 1px;
+        }
+        .story-card p { font-size: .92rem; color: #aaa; line-height: 1.75; }
+
+        /* === Character Section === */
+        .character-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        .char-card {
+            background: linear-gradient(135deg, #0f0f0f, #141414);
+            border: 1px solid #1a1a1a; border-radius: 4px; overflow: hidden;
+            transition: border-color .3s;
+        }
+        .char-card:hover { border-color: #8b0000; }
+        .char-img {
+            height: 200px; display: flex; align-items: center; justify-content: center;
+            font-size: 4rem; position: relative;
+        }
+        .char-img.grace { background: linear-gradient(135deg, #1a0505, #0f0f0f); }
+        .char-img.leon  { background: linear-gradient(135deg, #0a0a1a, #0f0f0f); }
+        .char-img.chris { background: linear-gradient(135deg, #0a1a0a, #0f0f0f); }
+        .char-body { padding: 1.5rem; }
+        .char-body h3 { font-size: 1.2rem; letter-spacing: 2px; margin-bottom: .3rem; }
+        .char-body .role { font-size: .85rem; color: #8b0000; margin-bottom: .8rem; }
+        .char-body p { font-size: .9rem; color: #aaa; line-height: 1.7; }
+
+        /* === Feature List === */
+        .feature-list {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+        }
+        .feature-item {
+            background: #0f0f0f; border: 1px solid #1a1a1a; border-radius: 4px;
+            padding: 1.8rem 1.5rem; text-align: center; transition: border-color .3s;
+        }
+        .feature-item:hover { border-color: #8b0000; }
+        .feature-item .feat-icon { font-size: 2.2rem; margin-bottom: .8rem; }
+        .feature-item h4 { font-size: 1rem; letter-spacing: 1px; margin-bottom: .5rem; }
+        .feature-item p { font-size: .85rem; color: #888; }
+
+        /* === Guide Section === */
+        .guide-tabs {
+            display: flex; flex-wrap: wrap; gap: .5rem; justify-content: center;
+            margin-bottom: 2.5rem;
+        }
+        .guide-tab {
+            padding: .6rem 1.4rem; border: 1px solid #222; border-radius: 2px;
+            background: transparent; color: #999; cursor: pointer;
+            font-size: .9rem; letter-spacing: 1px; transition: all .2s;
+            font-family: inherit;
+        }
+        .guide-tab:hover, .guide-tab.active {
+            border-color: #8b0000; color: #e8e8e8; background: rgba(139,0,0,.1);
+        }
+        .guide-panel { display: none; }
+        .guide-panel.active { display: block; }
+
+        .guide-card {
+            background: #0f0f0f; border: 1px solid #1a1a1a; border-radius: 4px;
+            padding: 2rem; margin-bottom: 1.5rem;
+        }
+        .guide-card h3 {
+            font-size: 1.1rem; color: #c0392b; margin-bottom: .8rem;
+            display: flex; align-items: center; gap: .6rem;
+        }
+        .guide-card h3 .num {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 28px; height: 28px; background: #8b0000; border-radius: 50%;
+            font-size: .8rem; color: #fff; flex-shrink: 0;
+        }
+        .guide-card p, .guide-card li { font-size: .9rem; color: #aaa; }
+        .guide-card ul { padding-left: 1.3rem; margin-top: .5rem; }
+        .guide-card li { margin-bottom: .35rem; }
+
+        .tip-box {
+            background: rgba(139,0,0,.08); border-left: 3px solid #8b0000;
+            padding: 1rem 1.5rem; border-radius: 0 4px 4px 0; margin: 1.5rem 0;
+        }
+        .tip-box strong { color: #c0392b; }
+
+        /* === Boss Table === */
+        .boss-table {
+            width: 100%; border-collapse: collapse; font-size: .9rem;
+        }
+        .boss-table th {
+            text-align: left; padding: .8rem 1rem;
+            background: #1a1a1a; color: #c0392b; font-weight: 600;
+            letter-spacing: 1px; font-size: .85rem;
+        }
+        .boss-table td {
+            padding: .8rem 1rem; border-bottom: 1px solid #1a1a1a; color: #aaa;
+        }
+        .boss-table tr:hover td { background: rgba(139,0,0,.04); }
+
+        /* === Footer === */
+        .footer {
+            text-align: center; padding: 3rem 2rem;
+            border-top: 1px solid #1a1a1a; color: #555; font-size: .85rem;
+        }
+        .footer .disclaimer { margin-top: .8rem; font-size: .78rem; color: #444; }
+
+        /* === Responsive === */
+        @media (max-width: 768px) {
+            .section { padding: 3rem 1.2rem; }
+            .nav-inner { gap: 1.2rem; padding: .8rem 1rem; }
+            .nav-inner a { font-size: .78rem; letter-spacing: 1px; }
+            .hero .meta { gap: .8rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ==================== HERO ==================== -->
+<section class="hero">
+    <div class="fog"></div>
+    <div class="hero-content">
+        <div class="hero-badge">Resident Evil · 第 9 部正统续作</div>
+        <h1>生化危机9<br>安魂曲</h1>
+        <p class="subtitle">RESIDENT EVIL 9 : REQUIEM</p>
+        <p class="tagline">「 亡者镇魂，生者梦魇 」</p>
+        <div class="meta">
+            <span>🎮 CAPCOM</span>
+            <span class="sep"></span>
+            <span>📅 2026年2月27日</span>
+            <span class="sep"></span>
+            <span>🖥 PC / PS5 / Xbox Series X</span>
+            <span class="sep"></span>
+            <span>🌐 简体中文 · 繁中 · 多国语言</span>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== NAV ==================== -->
+<nav class="nav-bar">
+    <div class="nav-inner">
+        <a href="#intro">游戏简介</a>
+        <a href="#characters">主要角色</a>
+        <a href="#features">核心特色</a>
+        <a href="#guide">攻略指南</a>
+        <a href="#boss">Boss 攻略</a>
+    </div>
+</nav>
+
+<!-- ==================== INTRODUCTION ==================== -->
+<section class="section" id="intro">
+    <div class="section-header">
+        <h2>游戏简介</h2>
+        <p>系列 30 周年的标志性转折点 · 纯正生存恐怖体验</p>
+    </div>
+
+    <div class="story-grid">
+        <div class="story-card">
+            <div class="icon">📖</div>
+            <h3>剧情概要</h3>
+            <p>
+                继《村庄》事件数年后，系列舞台再次回到一切开始的地方——<strong>浣熊市</strong>。城市废墟之下，隐藏着一个足以颠覆世界的秘密。
+                联邦调查局分析师<strong>格蕾丝·阿什克罗夫特</strong>奉命调查浣熊市遗址出现的异常能量信号，
+                却意外揭开了保护伞公司覆灭前留下的最后遗产——「安魂曲计划」。
+                传奇特工<strong>里昂·S·肯尼迪</strong>再度出山，两人将直面超越人类认知的恐怖。
+            </p>
+        </div>
+
+        <div class="story-card">
+            <div class="icon">🎯</div>
+            <h3>双主角叙事</h3>
+            <p>
+                本作采用<strong>双主角交替叙事</strong>。玩家将分别操控格蕾丝与里昂，从截然不同的视角体验这场噩梦。
+                格蕾丝的篇章侧重<strong>调查与解谜</strong>，深入挖掘安魂曲计划的真相；
+                里昂的篇章则回归<strong>高强度战斗</strong>，在浣熊市废墟中与新型B.O.W.生化武器正面交锋。
+                两条故事线最终交织汇合，共同决定人类的命运。
+            </p>
+        </div>
+
+        <div class="story-card">
+            <div class="icon">🏆</div>
+            <h3>开发背景</h3>
+            <p>
+                由<strong>CAPCOM</strong>开发与发行，采用全新的<strong>RE ENGINE 进化版</strong>引擎打造。
+                作为《生化危机》主线系列的<strong>第九部正统作品</strong>，也是系列诞生30周年的纪念之作。
+                2026年最受期待的游戏之一（仅次于GTA6），被媒体称为「生存恐怖类型的新标杆」。
+                支持第一人称与第三人称<strong>自由视角切换</strong>，兼顾沉浸感与经典体验。
+            </p>
+        </div>
+    </div>
+</section>
+
+<hr class="divider">
+
+<!-- ==================== CHARACTERS ==================== -->
+<section class="section" id="characters">
+    <div class="section-header">
+        <h2>主要角色</h2>
+        <p>熟悉的面孔与新的英雄</p>
+    </div>
+
+    <div class="character-grid">
+        <div class="char-card">
+            <div class="char-img grace">🔍</div>
+            <div class="char-body">
+                <h3>格蕾丝·阿什克罗夫特</h3>
+                <div class="role">Grace Ashcroft · 联邦调查局分析师</div>
+                <p>本作<strong>新任女主角</strong>，FBI特殊调查科的天才分析师。擅长密码破译、现场重建与行为分析。
+                冷静、理性，却隐藏着一段与浣熊市相关的黑暗过往。她的调查能力将是揭开安魂曲秘密的关键，
+                但与浣熊市废墟的直面接触也将考验她的意志极限。</p>
+            </div>
+        </div>
+
+        <div class="char-card">
+            <div class="char-img leon">🔫</div>
+            <div class="char-body">
+                <h3>里昂·S·肯尼迪</h3>
+                <div class="role">Leon S. Kennedy · DSO 传奇特工</div>
+                <p>系列<strong>经典角色重磅回归</strong>。1998年浣熊市事件的幸存者之一，现任DSO（安全行动部）高级特工。
+                时隔多年重返浣熊市废墟，熟悉的街道与记忆让他不得不再次直面心中的梦魇。
+                双持手枪、战术匕首、近战体术——里昂的战斗系统全面进化，带来系列最爽快的动作体验。</p>
+            </div>
+        </div>
+
+        <div class="char-card">
+            <div class="char-img chris">💪</div>
+            <div class="char-body">
+                <h3>克里斯·雷德菲尔德</h3>
+                <div class="role">Chris Redfield · BSAA 王牌战士</div>
+                <p>BSAA的<strong>核心战力</strong>，在故事后期加入战斗。作为经历过无数生化恐怖事件的老兵，
+                克里斯对浣熊市地下的新型B.O.W.有着直觉般的警惕。他的章节以<strong>重型武器战斗</strong>为主，
+                拳拳到肉的力量感将带给玩家截然不同的爽快体验。</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<hr class="divider">
+
+<!-- ==================== FEATURES ==================== -->
+<section class="section" id="features">
+    <div class="section-header">
+        <h2>核心特色</h2>
+        <p>全面进化的生存恐怖体验</p>
+    </div>
+
+    <div class="feature-list">
+        <div class="feature-item">
+            <div class="feat-icon">👁️</div>
+            <h4>双视角切换</h4>
+            <p>第一人称与第三人称自由切换，随时选择你最舒适的游玩方式</p>
+        </div>
+        <div class="feature-item">
+            <div class="feat-icon">🧟</div>
+            <h4>新型生化武器</h4>
+            <p>全新设计的敌人类型，包含多种形态进化的B.O.W.，每个都有独特弱点</p>
+        </div>
+        <div class="feature-item">
+            <div class="feat-icon">⚔️</div>
+            <h4>战术格挡系统</h4>
+            <p>新增精确格挡机制，完美时机格挡可触发强力反击，高风险高回报</p>
+        </div>
+        <div class="feature-item">
+            <div class="feat-icon">🔦</div>
+            <h4>动态光影技术</h4>
+            <p>RE引擎进化版带来实时光影渲染，暗场细节与血色渲染全面升级</p>
+        </div>
+        <div class="feature-item">
+            <div class="feat-icon">🗺️</div>
+            <h4>半开放探索</h4>
+            <p>浣熊市废墟区域互联互通，自由探索与主线推进并行的沙盒式关卡</p>
+        </div>
+        <div class="feature-item">
+            <div class="feat-icon">📦</div>
+            <h4>资源管理回归</h4>
+            <p>弹药稀缺、背包有限——经典的生存恐怖资源管理与合成系统全面回归</p>
+        </div>
+    </div>
+</section>
+
+<hr class="divider">
+
+<!-- ==================== GUIDE ==================== -->
+<section class="section" id="guide">
+    <div class="section-header">
+        <h2>攻略指南</h2>
+        <p>从新手到专家 —— 助你在浣熊市废墟中存活</p>
+    </div>
+
+    <!-- Tabs -->
+    <div class="guide-tabs">
+        <button class="guide-tab active" onclick="switchTab('beginner')">🎓 新手入门</button>
+        <button class="guide-tab" onclick="switchTab('chapters')">📋 章节攻略</button>
+        <button class="guide-tab" onclick="switchTab('weapons')">🔫 武器推荐</button>
+        <button class="guide-tab" onclick="switchTab('collect')">📦 收集要素</button>
+    </div>
+
+    <!-- Beginner -->
+    <div class="guide-panel active" id="panel-beginner">
+        <div class="guide-card">
+            <h3><span class="num">1</span> 战斗核心：瞄准弱点</h3>
+            <p>本作的敌人设计了明确的弱点系统。大部分B.O.W.身上有发光的<strong>橙色核心</strong>，集中火力攻击核心部位可造成3倍伤害并触发硬直。不要浪费子弹在普通部位上。</p>
+        </div>
+        <div class="guide-card">
+            <h3><span class="num">2</span> 精确格挡是生存关键</h3>
+            <p>在敌人攻击命中的瞬间按下防御键，可触发<strong>精确格挡</strong>。成功格挡后敌人会短暂失衡，此时发动近战攻击将造成巨额伤害，且不消耗任何弹药。</p>
+        </div>
+        <div class="guide-card">
+            <h3><span class="num">3</span> 资源管理黄金法则</h3>
+            <ul>
+                <li><strong>火药</strong>：优先合成手枪弹，性价比最高</li>
+                <li><strong>草药</strong>：红+绿=完全恢复，绿+绿=大恢复</li>
+                <li><strong>废料</strong>：优先升级背包容量（找到工作台即可）</li>
+                <li><strong>闪光弹</strong>：对群体敌人有奇效，必留至少1颗应急</li>
+            </ul>
+        </div>
+        <div class="tip-box">
+            <strong>💡 新手建议：</strong>第一遍推荐选择<strong>标准难度</strong>。硬核难度下敌人的攻击欲望和血量都有显著提升，不适合初次体验剧情。
+        </div>
+    </div>
+
+    <!-- Chapters -->
+    <div class="guide-panel" id="panel-chapters">
+        <div class="guide-card">
+            <h3><span class="num">1</span> 第一章 · 重返废墟</h3>
+            <p><strong>操控角色：格蕾丝</strong> | 抵达浣熊市外围调查异常信号。前期以探索和解谜为主，敌人较少。务必搜索每个房间获取补给。关键道具：<strong>FBI加密密钥</strong>（警察局一楼证物室）。</p>
+        </div>
+        <div class="guide-card">
+            <h3><span class="num">2</span> 第二章 · 地下设施</h3>
+            <p><strong>操控角色：里昂</strong> | 进入浣熊市地下的保护伞秘密研究所。遭遇第一个Boss<strong>「腐蚀者」</strong>（详见Boss攻略）。建议提前准备至少30发手枪弹+2颗手雷。</p>
+        </div>
+        <div class="guide-card">
+            <h3><span class="num">3</span> 第三章 · 安魂曲序章</h3>
+            <p><strong>操控角色：格蕾丝 ↔ 里昂</strong> | 双线并行章节。格蕾丝破解保护伞主控系统，里昂掩护。时间紧迫，优先清理远程攻击型敌人。关键节点会自动切换角色。</p>
+        </div>
+        <div class="guide-card">
+            <h3><span class="num">4</span> 第四章 · 噩梦降临</h3>
+            <p><strong>操控角色：里昂</strong> | 安魂曲计划的核心区域。敌人密度最高的章节，推荐使用霰弹枪清理密集杂兵。Boss<strong>「安魂曲之主」</strong>为多阶段战斗，准备充足恢复道具。</p>
+        </div>
+        <div class="guide-card">
+            <h3><span class="num">5</span> 终章 · 镇魂</h3>
+            <p><strong>操控角色：克里斯 → 格蕾丝 → 里昂</strong> | 三大主角轮流操控的史诗级终章。最终Boss战包含三个形态，请确保每个角色在切换前弹药充足。通关后解锁<strong>新游戏+</strong>与<strong>佣兵模式</strong>。</p>
+        </div>
+    </div>
+
+    <!-- Weapons -->
+    <div class="guide-panel" id="panel-weapons">
+        <div class="guide-card">
+            <h3>🔫 武器梯队推荐</h3>
+            <table class="boss-table">
+                <thead>
+                    <tr><th>梯队</th><th>武器</th><th>评价</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>S</td><td>银色幽灵（里昂专属手枪）</td><td>暴击率极高，满改后通关利器</td></tr>
+                    <tr><td>S</td><td>打击者霰弹枪</td><td>近战王者，群体控制能力顶级</td></tr>
+                    <tr><td>A</td><td>MP5 冲锋枪</td><td>中距离压制力强，弹药消耗较大</td></tr>
+                    <tr><td>A</td><td>半自动狙击步枪</td><td>远距离弱点精确打击，Boss战利器</td></tr>
+                    <tr><td>B</td><td>标准手枪 M9</td><td>初期主力，建议中期换银色幽灵</td></tr>
+                    <tr><td>B</td><td>手雷/闪光弹</td><td>消耗品，关键时刻保命神器</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Collectibles -->
+    <div class="guide-panel" id="panel-collect">
+        <div class="guide-card">
+            <h3><span class="num">📄</span> 文件收集（共 32 份）</h3>
+            <p>分布于各章节的保护伞研究笔记、幸存者日记和FBI机密档案。收集全部解锁隐藏剧情<strong>「安魂曲的真相」</strong>。</p>
+        </div>
+        <div class="guide-card">
+            <h3><span class="num">🎭</span> 浣熊先生雕像（共 15 个）</h3>
+            <p>系列经典收集品回归！散落在浣熊市废墟各处。全部击碎可获得<strong>无限弹药手枪</strong>（仅限二周目使用）。</p>
+        </div>
+        <div class="guide-card">
+            <h3><span class="num">🔧</span> 武器配件（共 8 个）</h3>
+            <p>包括红点瞄准镜、消音器、扩展弹匣、战术枪托等。推荐优先获取<strong>激光瞄准器</strong>（第三章地下靶场），可大幅提升腰射精度。</p>
+        </div>
+        <div class="tip-box">
+            <strong>💡 提示：</strong>通关后解锁的<strong>佣兵模式</strong>中，达成S级评价可解锁独家角色皮肤，包括经典<strong>RE2警服里昂</strong>与<strong>RE3经典格蕾丝</strong>。
+        </div>
+    </div>
+</section>
+
+<hr class="divider">
+
+<!-- ==================== BOSS GUIDE ==================== -->
+<section class="section" id="boss">
+    <div class="section-header">
+        <h2>Boss 攻略</h2>
+        <p>知己知彼，百战不殆</p>
+    </div>
+
+    <table class="boss-table">
+        <thead>
+            <tr><th>Boss</th><th>出现章节</th><th>弱点</th><th>推荐武器</th><th>核心策略</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>腐蚀者</strong></td>
+                <td>第二章</td>
+                <td>背部橙色囊肿</td>
+                <td>霰弹枪 + 手雷</td>
+                <td>保持中距离，引诱其喷射酸液后绕背输出。酸液落地会形成持续伤害区域，注意走位。</td>
+            </tr>
+            <tr>
+                <td><strong>猎杀者 γ</strong></td>
+                <td>第三章</td>
+                <td>口腔内部</td>
+                <td>狙击步枪</td>
+                <td>等待其张开嘴咆哮的瞬间射击口腔。一击即可造成大硬直，随后近战追击。切忌近身缠斗，其秒杀技范围极大。</td>
+            </tr>
+            <tr>
+                <td><strong>暴君 T-103 改</strong></td>
+                <td>第四章前期</td>
+                <td>心脏（正面核心）</td>
+                <td>马格南 / 狙击步枪</td>
+                <td>经典暴君的强化版。场景中有3个<strong>液氮阀门</strong>，开启后可冻结暴君5秒，趁机全力输出心脏。</td>
+            </tr>
+            <tr>
+                <td><strong>安魂曲之主（一阶段）</strong></td>
+                <td>第四章终</td>
+                <td>四根触手末端的发光体</td>
+                <td>任意武器</td>
+                <td>依次击破四根触手。触手会周期性砸地，利用翻滚闪避。每击破一根，Boss攻击频率加快。</td>
+            </tr>
+            <tr>
+                <td><strong>安魂曲之主（二阶段）</strong></td>
+                <td>第四章终</td>
+                <td>中央巨型独眼</td>
+                <td>全部重火力</td>
+                <td>Boss会释放全屏冲击波，需躲到场景柱子后方。独眼睁开时倾泻全部弹药，闭合时补充状态。这是全游戏最难的战斗。</td>
+            </tr>
+            <tr>
+                <td><strong>终极安魂曲</strong></td>
+                <td>终章</td>
+                <td>三形态各有不同弱点</td>
+                <td>各角色专属武器</td>
+                <td>形态一（克里斯·机枪扫射）、形态二（格蕾丝·解密破解护盾）、形态三（里昂·银色幽灵精准射击）。每个形态切换时有补给补给点。</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="tip-box" style="margin-top: 2rem;">
+        <strong>🏆 全Boss速通要点：</strong>二周目携带无限弹药武器后，可在2小时内完成全Boss Rush。<strong>腐蚀者</strong>和<strong>安魂曲之主二阶段</strong>是速通中最容易翻车的两个节点，建议重点练习。
+    </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+    <p>© 2026 Resident Evil 9: Requiem · CAPCOM Co., Ltd. 版权所有</p>
+    <p class="disclaimer">本页面为玩家自制资料站，非官方页面。游戏版权归 CAPCOM 所有。</p>
+</footer>
+
+<!-- ==================== SCRIPTS ==================== -->
+<script>
+    function switchTab(name) {
+        document.querySelectorAll('.guide-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.guide-panel').forEach(p => p.classList.remove('active'));
+        document.querySelector(`[onclick="switchTab('${name}')"]`).classList.add('active');
+        document.getElementById('panel-' + name).classList.add('active');
+    }
+</script>
+
+</body>
+</html>
